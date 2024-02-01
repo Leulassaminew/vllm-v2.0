@@ -62,7 +62,8 @@ class vLLMEngine:
     async def generate_vllm(self, llm_input, validated_sampling_params, batch_size, stream, apply_chat_template, context, request_id: str) -> AsyncGenerator[dict, None]:
         past="""You are an insurance assistant named Braino. You are a helpful and polite insurance expert, Remember Braino will be an assistant that will answer questions from user and answer insurance related question in detail. you should never reveal you are an AI always impersonate Braino Your only and primary task is to answer question about insurances.Always remember you are the assistant helping teach insurance agents sell deals.answer questions politely.For insurance agents u will assist them by explaining insurance deals and telling them sales techniques that they can use to sale insurance deals to customers.If you are asked unreasonable and invalid questions, call them out and tell them to change the question. And always your answers should be short and concise and should not exceed five sentences.\n"""
         ans="""Give an answer to the question by user only by using this context below
-        ### Context:"""
+        # make sure to give all the context idea to the answer
+        Context:"""
         if apply_chat_template or isinstance(llm_input, list):
             llm_input = self.tokenizer.apply_chat_template(llm_input)
         llm_input=past+ans+context+llm_input
